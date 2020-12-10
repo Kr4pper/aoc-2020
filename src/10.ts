@@ -1,10 +1,8 @@
-import {readInput} from './utils';
+import {getDeltas, readInput} from './utils';
 
 const input = readInput(10).split('\r\n').map(Number);
 
 // Part 1
-const getDeltas = (values: number[]) => values.slice(1).map((v, i) => v - values[i]);
-
 const sorted = [0, ...input.sort((a, b) => a - b), Math.max(...input) + 3];
 const counts = getDeltas(sorted).reduce((acc, v) => ({...acc, [v]: (acc[v] || 0) + 1}), {});
 
