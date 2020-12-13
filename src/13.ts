@@ -1,4 +1,4 @@
-import {readInput} from './utils';
+import {lcm, readInput} from './utils';
 
 const input = readInput(13);
 
@@ -29,7 +29,7 @@ const getPart2Result = () => {
             if ((t + offset) % busId !== 0) break;
 
             if (++matchedRules === rules.length) return t;
-            step *= busId;
+            step = lcm(step, busId);
         }
     } while (t += step);
 };
