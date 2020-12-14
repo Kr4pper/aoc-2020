@@ -1,11 +1,13 @@
 import {lcm, readInput} from './utils';
 
-const input = readInput(13);
-
 // Part 1
-const [earliestString, allBusIds] = input.split('\r\n');
-const earliest = +earliestString;
-const busIdsPart1 = allBusIds.split(',').filter(v => v !== 'x').map(Number);
+const parseInput = () => {
+    const [earliestString, allBusIds] = readInput(13).split('\r\n');
+    return {earliest: +earliestString, busIds: allBusIds.split(',')};
+};
+
+const {earliest, busIds} = parseInput();
+const busIdsPart1 = busIds.filter(v => v !== 'x').map(Number);
 
 const earliestDepartures = busIdsPart1.map(v => [v, Math.ceil(earliest / v) * v]);
 const [busId, busDeparture] = earliestDepartures.sort(([_, d1], [__, d2]) => d1 > d2 ? 1 : -1)[0];
@@ -13,8 +15,7 @@ console.log('Part 1:', busId * (busDeparture - earliest));
 
 // Part 2
 const getPart2Result = () => {
-    const rules = allBusIds
-        .split(',')
+    const rules = busIds
         .map(v => v !== 'x' ? v : null)
         .map(Number)
         .map((v, offset) => v === 0 ? undefined : [v, offset])
