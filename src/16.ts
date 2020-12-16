@@ -8,6 +8,7 @@ const range = (min: number, max: number) => Array.from({length: max - min + 1}, 
 const ruleRegex = /^([^\:]*): (\d+)-(\d+) or (\d+)-(\d+)$/;
 const parseRule = (rule: string) => {
     const [_, name, min1, max1, min2, max2] = rule.match(ruleRegex);
+
     return {
         name,
         allowed: new Set([
@@ -19,13 +20,7 @@ const parseRule = (rule: string) => {
 
 const rules = _rules.map(parseRule);
 const validValues = new Set(
-    rules.reduce(
-        (valid, rule) => [
-            ...valid,
-            ...rule.allowed,
-        ],
-        [],
-    )
+    rules.reduce((acc, r) => [...acc, ...r.allowed], [])
 );
 
 const parseTicket = (ticket: string) => ticket.split(',').map(Number);
